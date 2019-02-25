@@ -117,8 +117,7 @@ public class Main {
                     break;
             default:
                     System.out.println("Please choose the correct number");
-        }
-        
+        }  
         System.out.println("Name: "+user.getName());
     }
     
@@ -382,7 +381,7 @@ public class Main {
                         break;
                 }
             }else{
-                System.out.println("The book is not found");
+                System.out.println("The user is not found");
                 System.out.println("Press 1 to continue search, press 2 to come back the main board, press 3 to exit");
                 chooseNumber = scan.nextInt();
                 switch (chooseNumber) {
@@ -400,7 +399,6 @@ public class Main {
                 }
             } 
         }
-     
     }
     
     public static void addUser(){
