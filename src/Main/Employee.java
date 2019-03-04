@@ -5,6 +5,8 @@
  */
 package Main;
 
+import Main.Person;
+import Main.User;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -32,8 +34,7 @@ public class Employee extends Person{
         this.salary = salary;
     }
 
-    public Employee(){
-        
+    public Employee(){      
     }
     public Employee(String position, int salary) {
         this.position = position;
@@ -48,10 +49,14 @@ public class Employee extends Person{
     
     public static ArrayList<Employee> listEmployee = new ArrayList<Employee>();
     
-    public static void manageEmployee(){
+    public void manageEmployee(){
         System.out.println("");
         System.out.println("--------------------------------------------");
         int chooseNumber;
+        
+        Employee empoyeeDefault1 = new Employee();
+        User userDefault = new User();
+        
         System.out.println("---Manage User---");
         System.out.println("1. View all employee");
         System.out.println("2. Search");
@@ -61,13 +66,13 @@ public class Employee extends Person{
         Scanner scan = new Scanner(System.in);
         chooseNumber = scan.nextInt();
         switch (chooseNumber){
-            case 1: Employee.viewAllEmployee();
+            case 1: empoyeeDefault1.viewAllEmployee();
                     break;
-            case 2: Employee.searchEmployee();
+            case 2: empoyeeDefault1.searchEmployee();
                     break;
-            case 3: Employee.addEmployee();
+            case 3: empoyeeDefault1.addEmployee();
                     break;
-            case 4: User.adminFrame();
+            case 4: userDefault.adminFrame();
                     break;
             case 5: System.exit(0);
                     break;
@@ -76,9 +81,12 @@ public class Employee extends Person{
         }
     }
     
-    public static void viewAllEmployee(){
+    public void viewAllEmployee(){
         System.out.println("");
         System.out.println("--------------------------------------------");
+        
+        Employee empoyeeDefault1 = new Employee();
+        
         int chooseNumber;
         System.out.println("This is the list employee");
         for (Employee employee : listEmployee) {
@@ -90,7 +98,7 @@ public class Employee extends Person{
         chooseNumber = scan.nextInt();
         switch (chooseNumber) {
             case 1:
-                manageEmployee();
+                empoyeeDefault1.manageEmployee();
                 break;
             case 2:
                 System.exit(0);
@@ -100,58 +108,76 @@ public class Employee extends Person{
         }
     }
     
-    public static void searchEmployee(){
+    public void searchEmployee(){
         System.out.println("");
         System.out.println("--------------------------------------------");
+        
+        Employee empoyeeDefault1 = new Employee();
+        
+        int flag = 0;
         int chooseNumber;
-        String searchBook;
+        String searchEmployeeName;
         Scanner scan = new Scanner(System.in);
-        System.out.println("Please enter the employee's name");
-        searchBook = scan.nextLine();
+        System.out.println("Please enter the Employee's name");
+        searchEmployeeName = scan.nextLine();
         for (Employee employee: listEmployee) {
-            if (searchBook.trim().equalsIgnoreCase(employee.getName()) ) {
+            if(employee.getName() != null && employee.getName().contains(searchEmployeeName)) {
                 System.out.println(employee.toString());
-                System.out.println("Press 1 to continue search, press 2 to come back the main board, press 3 to exit");
+                
+                System.out.println("Press 1 to continue search, press 2 to update this employee, press 3 to delete this employee, "
+                        + "press 4 to go back the employee board, press 5 to exit");
                 chooseNumber = scan.nextInt();
                 switch (chooseNumber) {
                     case 1:
                         searchEmployee();
                         break;
                     case 2:
-                        manageEmployee();
+                        employee.updateEmployee(employee);
                         break;
                     case 3:
-                        System.exit(0);
-                    default:
-                        System.out.println("Please enter the correct number!");
+                        listEmployee.remove(employee);
+                        empoyeeDefault1.viewAllEmployee();
                         break;
-                }
-            }
-            else{
-                System.out.println("The employee is not found");
-                System.out.println("Press 1 to con1"
-                        + "tinue search, press 2 to come back the main board, press 3 to exit");
-                chooseNumber = scan.nextInt();
-                switch (chooseNumber) {
-                    case 1:
-                        searchEmployee();
-                        break;
-                    case 2:
-                        manageEmployee();
-                        break;
-                    case 3:
-                        System.exit(0);
                     default:
                         System.out.println("Please enter the correct number!");
                         break;
                 }
             }
         }
+        if (flag == 1) {
+            empoyeeDefault1.searchBack();
+        }else{
+            System.out.println("The employee is not found");
+            empoyeeDefault1.searchBack();
+        }
     }
     
-    public static void addEmployee(){
+    public void searchBack(){
+        int chooseNumber;
+        Scanner scan = new Scanner(System.in);
+        
+        Employee empoyeeDefault1 = new Employee();
+        
+        System.out.println("Press 1 to continue search, press 2 to come back the main board, press 3 to exit");
+        chooseNumber = scan.nextInt();
+        switch (chooseNumber) {
+            case 1:
+                empoyeeDefault1.searchEmployee();
+                break;
+            case 2:
+                empoyeeDefault1.manageEmployee();
+                break;
+            case 3:
+                System.exit(0);
+            default:
+                System.out.println("Please enter the correct number!");
+                break;
+        }  
+    }
+    
+    public void addEmployee(){
         System.out.println(""); 
-       System.out.println("--------------------------------------------");
+        System.out.println("--------------------------------------------");
         int chooseNumber;
         
         String name;
@@ -161,7 +187,8 @@ public class Employee extends Person{
         double accountNumber;
         String position;
         int salary;
-
+        
+        Employee empoyeeDefault1 = new Employee();
         Scanner scan = new Scanner(System.in);
 
         System.out.println("************Add User Form*************");
@@ -172,12 +199,12 @@ public class Employee extends Person{
         System.out.println("Enter the phone:");
         phone = scan.nextDouble();
         System.out.println("Enter the address:");
-        address = scan.nextLine();
+        scan.nextLine();
         address = scan.nextLine();
         System.out.println("Enter the account number:");
         accountNumber = scan.nextDouble();
         System.out.println("Enter the position:");
-        position = scan.nextLine();
+        scan.nextLine();
         position = scan.nextLine();
         System.out.println("Enter the salary:");
         salary = scan.nextInt();
@@ -191,10 +218,67 @@ public class Employee extends Person{
         chooseNumber = scan.nextInt();
         switch (chooseNumber) {
             case 1:
-                addEmployee();
+                empoyeeDefault1.addEmployee();
                 break;
             case 2:
-                manageEmployee();
+                empoyeeDefault1.manageEmployee();
+                break;
+            case 3:
+                System.exit(0);
+            default:
+                System.out.println("Please enter the correct number!");
+                break;
+        }
+    }
+    
+    public void updateEmployee(Employee employee){
+        System.out.println(""); 
+        System.out.println("--------------------------------------------");
+        int chooseNumber;
+        
+        Employee empoyeeDefault1 = new Employee();
+        Scanner scan = new Scanner(System.in);
+
+        System.out.println("************Update Employee Form*************");
+        System.out.println("Enter the name:");
+        String name = scan.nextLine();
+        
+        System.out.println("Enter the age:");
+        int age = scan.nextInt();
+        
+        System.out.println("Enter the phone:");
+        double phone = scan.nextDouble();
+        
+        System.out.println("Enter the address:");
+        scan.nextLine();
+        String address = scan.nextLine();
+        
+        System.out.println("Enter the account number:");
+        double accountNumber = scan.nextDouble();
+        
+        System.out.println("Enter the position:");
+        scan.nextLine();
+        String position = scan.nextLine();
+        
+        System.out.println("Enter the salary:");
+        int salary = scan.nextInt();
+        
+        employee.setName(name);
+        employee.setAge(age);
+        employee.setPhone(phone);
+        employee.setAddress(address);
+        employee.setAccountNumber(accountNumber);
+        employee.setPosition(position);
+        employee.setSalary(salary);
+       
+        System.out.println("Press 1 to continue add, press 2 to come back the main board, press 3 to exit");
+        chooseNumber = scan.nextInt();
+        switch (chooseNumber) {
+            case 1:
+                empoyeeDefault1.addEmployee();
+                break;
+            case 2:
+                empoyeeDefault1.manageEmployee();
                 break;
             case 3:
                 System.exit(0);

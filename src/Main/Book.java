@@ -6,6 +6,8 @@
 package Main;
 
 import static Main.Login.userName;
+import Main.User;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -21,6 +23,8 @@ public class Book {
     private int quantity;
     private Author author;
    
+    public Book(){}
+    
     public Book(String code, String name, String category, double price, int quantity, Author author) {
         this.code = code;
         this.name = name;
@@ -88,10 +92,15 @@ public class Book {
     }
     
     public static ArrayList<Book> listBook = new ArrayList<Book>();
+    public static ArrayList<Book> listBuyBook = new ArrayList<Book>();
     
-    public static void manageBook(){
+    public void manageBook(){
         System.out.println("");
         System.out.println("--------------------------------------------");
+        
+        Book bookDefault = new Book();
+        User userDefault = new User();
+        
         int chooseNumber;
         System.out.println("---Manage User---");
         System.out.println("1. View all book");
@@ -102,13 +111,13 @@ public class Book {
         Scanner scan = new Scanner(System.in);
         chooseNumber = scan.nextInt();
         switch (chooseNumber){
-            case 1: Book.viewAllBook();
+            case 1: bookDefault.viewAllBook();
                     break;
-            case 2: Book.searchBook();
+            case 2: bookDefault.searchBook();
                     break;
-            case 3: Book.addBook();
+            case 3: bookDefault.addBook();
                     break;
-            case 4: User.adminFrame();   
+            case 4: userDefault.adminFrame();   
                     break;
             case 5: System.exit(0);
                     break;
@@ -120,6 +129,10 @@ public class Book {
     public static void viewAllBook(){
         System.out.println("");
         System.out.println("--------------------------------------------");
+        
+        Book bookDefault = new Book();
+        User userDefault = new User();
+        
         int chooseNumber;
         System.out.println("This is the list book");
             for (Book book : listBook) {
@@ -131,9 +144,9 @@ public class Book {
         chooseNumber = scan.nextInt();
         if (chooseNumber == 1) {
             if (userName.trim().equalsIgnoreCase("admin")) {
-                manageBook();
+                bookDefault.manageBook();
             } else {
-                User.userFrame();
+                userDefault.userFrame();
             }
         } else if (chooseNumber == 2) {
             System.exit(0);
@@ -143,12 +156,14 @@ public class Book {
         }
     }
     
-    public static void addBook(){
+    public void addBook(){
         System.out.println("");
         System.out.println("--------------------------------------------");
         int chooseNumber;
         String searchBook;
         Scanner scan = new Scanner(System.in);
+        
+        Book bookDefault = new Book();
         
         String name;
         String category;
@@ -180,7 +195,7 @@ public class Book {
                 addBook();
                 break;
             case 2:
-                manageBook();
+                bookDefault.manageBook();
                 break;
             case 3:
                 System.exit(0);
@@ -190,48 +205,69 @@ public class Book {
         }
     }
     
-    public static void searchBook(){
+    public void searchBook(){
         System.out.println("");
         System.out.println("--------------------------------------------");
+        
+        Book bookDefault = new Book();
+        
+        int flag = 0;
         int chooseNumber;
-        String searchBook;
+        String searchNameBook;
         Scanner scan = new Scanner(System.in);
         System.out.println("Please enter the book's name");
-        searchBook = scan.nextLine();
-        for(Book book: listBook){
-            if (searchBook.trim().equalsIgnoreCase(book.getName()) ) {
+        searchNameBook = scan.nextLine();
+        for (Book book: listBook) {
                 System.out.println(book.toString());
-                System.out.println("Press 1 to continue search, press 2 to go back, press 3 to exit");
-                chooseNumber = scan.nextInt();
-                if (chooseNumber == 1) {
-                    searchBook();
-                }else if(chooseNumber == 2){
-                    manageBook();
-                }else if(chooseNumber == 3){
-                    System.exit(0);
-                }
-                else {
-                    System.out.println("Please enter the correct number!");
-                }
-            }else{
-                System.out.println("The book is not found");
-                System.out.println("Press 1 to continue search, press 2 to go back , press 3 to exit");
+                
+                System.out.println("Press 1 to continue search, press 2 to update this book, press 3 to delete this book, "
+                        + "press 4 to go back the book board, press 5 to exit");
                 chooseNumber = scan.nextInt();
                 switch (chooseNumber) {
                     case 1:
-                        searchBook();
+                        book.searchBook();
                         break;
                     case 2:
-                        manageBook();
+//                        book.updateBook(book);
                         break;
                     case 3:
-                        System.exit(0);
+                        listBook.remove(book);
+                        bookDefault.viewAllBook();
+                        break;
                     default:
                         System.out.println("Please enter the correct number!");
                         break;
                 }
-            }
         }
+        if (flag == 1) {
+            bookDefault.searchBack();
+        }else{
+            System.out.println("The book is not found");
+            bookDefault.searchBack();
+        }
+    }
+    
+    public void searchBack(){
+        int chooseNumber;
+        
+        Book bookDefault = new Book();
+        
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Press 1 to continue search, press 2 to come back the main board, press 3 to exit");
+        chooseNumber = scan.nextInt();
+        switch (chooseNumber) {
+            case 1:
+                searchBook();
+                break;
+            case 2:
+                bookDefault.manageBook();
+                break;
+            case 3:
+                System.exit(0);
+            default:
+                System.out.println("Please enter the correct number!");
+                break;
+        }  
     }
     
     @Override

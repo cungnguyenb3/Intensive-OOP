@@ -1,11 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Main;
 
+import Main.Book;
 import static Main.Main.mainFrame;
+import Main.Person;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -39,7 +37,6 @@ public class User extends Person{
         this.isAdmin = 0;
     }
     
-
     public String getUsername() {
         return username;
     }
@@ -66,9 +63,14 @@ public class User extends Person{
     
     public static ArrayList<User> listUser = new ArrayList<User>();
     
-    public static void adminFrame(){
+    public void adminFrame(){
         System.out.println("");
         System.out.println("--------------------------------------------");
+        
+        Book bookDefault1 = new Book();
+        Employee empoyeeDefault1 = new Employee();
+        User userDefault = new User();
+        Login login = new Login();
         
         int chooseNumber;
         System.out.println("---Admin Page---");
@@ -80,13 +82,13 @@ public class User extends Person{
         Scanner scan = new Scanner(System.in);
         chooseNumber = scan.nextInt();
         switch (chooseNumber){
-            case 1: User.manageUser()    ;
+            case 1: userDefault.manageUser()    ;
                     break;
-            case 2: Book.manageBook();
+            case 2: bookDefault1.manageBook();
                     break;
-            case 3: Employee.manageEmployee();
+            case 3: empoyeeDefault1.manageEmployee();
                     break;
-            case 4: Main.mainFrame();
+            case 4: login.loginForm();
                     break;    
             case 5: System.exit(0);
                     break;
@@ -95,12 +97,16 @@ public class User extends Person{
         }
     }
     
-    public static void userFrame(){
+    public void userFrame(){
         System.out.println("");
         System.out.println("--------------------------------------------");
+        
+        Book bookDefault2 = new Book();
+        Login login = new Login();
+        
         int chooseNumber;
         System.out.println("---Welcome to Online Book Sale---");
-        System.out.println("1. View all books");
+        System.out.println("1. View all user");
         System.out.println("2. Search book");
         System.out.println("3. Log out");
         System.out.println("4. Exit");
@@ -108,11 +114,11 @@ public class User extends Person{
         chooseNumber = scan.nextInt();
         
         switch (chooseNumber){
-            case 1: Book.viewAllBook();
+            case 1: bookDefault2.viewAllBook();
                     break;
-            case 2: Book.searchBook();
+            case 2: bookDefault2.searchBook();
                     break;
-            case 3: Main.mainFrame();
+            case 3: login.loginForm();
                     break;
             case 4: System.exit(0);
                     break;
@@ -121,9 +127,12 @@ public class User extends Person{
         }
     }
     
-    public static void manageUser(){
+    public void manageUser(){
         System.out.println("");
         System.out.println("--------------------------------------------");
+         
+        User userDefault = new User();
+        
         int chooseNumber;
         System.out.println("---Manage User---");
         System.out.println("1. View all user");
@@ -133,15 +142,15 @@ public class User extends Person{
         System.out.println("5. Exit");
         Scanner scan = new Scanner(System.in);
         chooseNumber = scan.nextInt();
-        User user = new User("huycuong333", "12345", 1);
+//        User user = new User("huycuong333", "12345", 1);
         switch (chooseNumber){
-            case 1: user.viewAllUser();
+            case 1: userDefault.viewAllUser();
                     break;
-            case 2: User.searchUser();
+            case 2: userDefault.searchUser();
                     break;
-            case 3: User.addUser();
+            case 3: userDefault.addUser();
                     break;
-            case 4: adminFrame();
+            case 4: userDefault.adminFrame();
                     break;
             case 5: System.exit(0);
                     break;
@@ -150,9 +159,10 @@ public class User extends Person{
         }
     }
     
-    public static void viewAllUser(){
+    public void viewAllUser(){
         System.out.println("");
         System.out.println("--------------------------------------------");
+        
         int chooseNumber;
         System.out.println("This is the list user");
         for (User user : listUser) {
@@ -174,10 +184,12 @@ public class User extends Person{
         }
     }
     
-    public static void addUser(){
+    public void addUser(){
         System.out.println("");
         System.out.println("--------------------------------------------");
         int chooseNumber;
+        
+        User userDefault5 = new User();
         
         String name;
         int age;
@@ -196,7 +208,7 @@ public class User extends Person{
         System.out.println("Enter you phone:");
         phone = scan.nextInt();
         System.out.println("Enter your address:");
-        address = scan.nextLine();
+        scan.nextLine();
         address = scan.nextLine();
         System.out.println("Enter your username:");
         username = scan.nextLine();
@@ -211,10 +223,10 @@ public class User extends Person{
         chooseNumber = scan.nextInt();
         switch (chooseNumber) {
             case 1:
-                addUser();
+                userDefault5.addUser();
                 break;
             case 2:
-                manageUser();
+                userDefault5.manageUser();
                 break;
             case 3:
                 System.exit(0);
@@ -224,11 +236,14 @@ public class User extends Person{
         }
     }
     
-    public static void searchUser(){
+    public void searchUser(){
         System.out.println("");
         System.out.println("--------------------------------------------");
-        int chooseNumber;
+        
+        User userDefault7 = new User("tuan","password",0);
+        
         int flag = 0;
+        int chooseNumber;
         String searchUsername;
         Scanner scan = new Scanner(System.in);
         System.out.println("Please enter the user's name");
@@ -236,57 +251,114 @@ public class User extends Person{
         for (User user: listUser) {
             if(user.getName() != null && user.getName().contains(searchUsername)) {
                 System.out.println(user.toString());
-                flag = 1;
-                break;
+                
+                System.out.println("Press 1 to continue search, press 2 to update this user, press 3 to delete this user, "
+                        + "press 4 to go back the user board, press 5 to exit");
+                chooseNumber = scan.nextInt();
+                switch (chooseNumber) {
+                    case 1:
+                        user.searchUser();
+                        break;
+                    case 2:
+                        user.updateUser(user);
+                        break;
+                    case 3:
+                        listUser.remove(user);
+                        userDefault7.viewAllUser();
+                        break;
+                    default:
+                        System.out.println("Please enter the correct number!");
+                        break;
+                }
             }else{
                 flag = 0;
             }
         }
         if (flag == 1) {
-            System.out.println("Press 1 to continue search, press 2 to come back the main board, press 3 to exit");
-            chooseNumber = scan.nextInt();
-            switch (chooseNumber) {
-                case 1:
-                    searchUser();
-                    break;
-                case 2:
-                    manageUser();
-                    break;
-                case 3:
-                    System.exit(0);
-                default:
-                    System.out.println("Please enter the correct number!");
-                    break;
-            }        
+            userDefault7.searchBack();
         }else{
             System.out.println("The user is not found");
-            System.out.println("Press 1 to continue search, press 2 to come back the main board, press 3 to exit");
-            chooseNumber = scan.nextInt();
-            switch (chooseNumber) {
-                case 1:
-                    searchUser();
-                    break;
-                case 2:
-                    manageUser();
-                    break;
-                case 3:
-                    System.exit(0);
-                default:
-                    System.out.println("Please enter the correct number!");
-                    break;
-            }
+            userDefault7.searchBack();
         }
     }
     
-    public static void updateUser(){}
+    public void searchBack(){
+        int chooseNumber;
+        
+        User userDefault8 = new User("phuc","password",0);
+        
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Press 1 to continue search, press 2 to come back the main board, press 3 to exit");
+        chooseNumber = scan.nextInt();
+        switch (chooseNumber) {
+            case 1:
+                searchUser();
+                break;
+            case 2:
+                manageUser();
+                break;
+            case 3:
+                System.exit(0);
+            default:
+                System.out.println("Please enter the correct number!");
+                break;
+        }  
+    }
     
-    public static void deleteUser(){}
+    
+    public void updateUser(User user){
+        
+        int chooseNumber;
+        
+        Scanner scan = new Scanner(System.in);
+        System.out.println("************Update Form*************");
+        System.out.println("Enter your name:");
+        String name = scan.nextLine();
+        
+        System.out.println("Enter you age:");
+        int age = scan.nextInt();
+        
+        System.out.println("Enter you phone:");
+        double phone = scan.nextInt();
+        
+        System.out.println("Enter your address:");
+        scan.nextLine();
+        String address = scan.nextLine();
+        
+        System.out.println("Enter your username:");
+        String username = scan.nextLine();
+        
+        System.out.println("Enter your password:");
+        String password = scan.nextLine();
+  
+        user.setName(name);
+        user.setAge(age);
+        user.setPhone(phone);
+        user.setAddress(address);
+        user.setUsername(username);
+        user.setPassword(password);        
+        
+        System.out.println("Update success!");
+        System.out.println("Press 1 to update again, press 2 to comeback main frame,press 3 to view all user, press 4 to exit");
+        chooseNumber = scan.nextInt();
+        switch (chooseNumber){
+            case 1: updateUser(user);
+                    break;
+            case 2: manageUser();
+                    break;
+            case 3: viewAllUser();
+                    break;
+            case 4: System.exit(0);
+                    break;
+            default:
+                    System.out.println("Please choose the correct number");
+        }  
+    }
+    
     
     @Override
     public String toString() {
         return "User@[Name: " + this.getName() + ", age: " + this.getAge() + ", phone: "+ this.getPhone() + ", address: "+ this.getAddress() +
                 ", username: "+ this.getUsername() + "]" + ", password: "+ this.getPassword();
-    }
-
-    
+    }  
 }

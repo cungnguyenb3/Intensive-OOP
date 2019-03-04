@@ -6,6 +6,7 @@
 package Main;
 
 
+import Main.User;
 import static Main.Main.mainFrame;
 import static Main.User.listUser;
 import java.util.Scanner;
@@ -18,6 +19,8 @@ public class Register {
     public static void registerForm(){
         System.out.println("");
         System.out.println("--------------------------------------------");
+        
+        Login login = new Login();
         
         int chooseNumber;
         String name;
@@ -55,13 +58,14 @@ public class Register {
                     break;
             case 2: mainFrame();
                     break;
-            case 3: Login.loginForm();
+            case 3: login.loginForm();
                     break;
             case 4: System.exit(0);
                     break;
             default:
                     System.out.println("Please choose the correct number");
         }  
+        
         System.out.println("Name: "+user.getName());
     }
 }

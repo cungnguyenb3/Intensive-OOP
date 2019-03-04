@@ -5,6 +5,10 @@
  */
 package Main;
 
+import static Main.User.listUser;
+import static Main.User.listUser;
+import static Main.User.listUser;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -15,11 +19,13 @@ public class Login {
     public static String userName;
     public static String password;  
     
-    public static void loginForm(){
+    public  void loginForm(){
         System.out.println("");
         System.out.println("--------------------------------------------");
         
         int chooseNumber;
+        int flag = 0;
+        
         Scanner scan = new Scanner(System.in);
         System.out.println("Online Book Sale");
         System.out.println("*********************");
@@ -28,24 +34,38 @@ public class Login {
         userName = scan.nextLine();
         System.out.println("Enter Password");
         password = scan.nextLine();
-
-//      for(User user: listUser){
-            if(userName.trim().equalsIgnoreCase("username") && password.trim().equalsIgnoreCase("password")){
-                User.userFrame();     
-            } else if(userName.trim().equalsIgnoreCase("admin") && password.trim().equalsIgnoreCase("password")){
-                User.adminFrame();
-            } else {
-                System.out.println("Your accout is not corect!");
-                System.out.println("Press 1 to login again, press 2 to comeback main frame, press 3 to exit");
-                chooseNumber = scan.nextInt();
-                if (chooseNumber == 1) {
-                    loginForm();
-                }else if (chooseNumber == 2) {
-                    Main.mainFrame();  
+        User userDefault = new User();
+        
+        for(User user: listUser){
+            if(user.getUsername().contains(userName) && user.getPassword().contains(password)){
+                if (1 == user.getIsAdmin()) {
+                    user.adminFrame();
+                    flag = 1;
+                    break;
+                }else if(0 == user.getIsAdmin()){
+                    user.userFrame();
+                    flag = 1;
+                    break;
                 }else{
-                    System.exit(0);
+                    System.out.println("Loi gi do");
                 }
             }
-//      }
+        }
+        if (flag != 1) {
+            System.out.println("Your accout is not corect!");
+            System.out.println("Press 1 to login again, press 2 to comeback main frame, press 3 to exit");
+            chooseNumber = scan.nextInt();
+            if (chooseNumber == 1) {
+                loginForm();
+            }else if (chooseNumber == 2) {
+                userDefault.adminFrame();  
+            }else{
+                System.exit(0);
+            }
+        }
+             
+    }
+    
+    public void loginBack(){
     }
 }
