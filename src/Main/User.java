@@ -106,7 +106,7 @@ public class User extends Person{
         
         int chooseNumber;
         System.out.println("---Welcome to Online Book Sale---");
-        System.out.println("1. View all user");
+        System.out.println("1. View all book");
         System.out.println("2. Search book");
         System.out.println("3. Log out");
         System.out.println("4. Exit");

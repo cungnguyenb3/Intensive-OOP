@@ -16,8 +16,9 @@ import java.util.Scanner;
  * @author cung.nguyen
  */
 public class Login {
-    public static String userName;
-    public static String password;  
+    private static String userName;
+    private static String password; 
+    public static int isUser;
     
     public  void loginForm(){
         System.out.println("");
@@ -39,12 +40,14 @@ public class Login {
         for(User user: listUser){
             if(user.getUsername().contains(userName) && user.getPassword().contains(password)){
                 if (1 == user.getIsAdmin()) {
-                    user.adminFrame();
+                    isUser = 1;
                     flag = 1;
+                    user.adminFrame();
                     break;
                 }else if(0 == user.getIsAdmin()){
-                    user.userFrame();
+                    isUser = 0;
                     flag = 1;
+                    user.userFrame();
                     break;
                 }else{
                     System.out.println("Loi gi do");

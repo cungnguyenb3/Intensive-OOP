@@ -16,6 +16,7 @@ abstract public class Person {
     protected double phone;
     protected String address;
     protected double accountNumber;
+    
 public Person(){
 }
 public Person(String code,String name,int age,double phone,String address,double acountNumber){

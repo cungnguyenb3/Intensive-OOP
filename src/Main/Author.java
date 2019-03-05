@@ -55,11 +55,23 @@ public class Author {
         return author;
     }
     
+    public static void updateAuthor(Author author){
+        String name;
+        String gender;
+
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Enter author's name:");
+        name = scan.nextLine();
+        System.out.println("Enter author's gender:");
+        gender = scan.nextLine();
+        
+        author.setName(name);
+        author.setGender(gender);
+    }
+    
     @Override
     public String toString() {
         return "Author{" + "name=" + name + ", gender=" + gender + '}';
     }
-    
-    
-    
+
 }

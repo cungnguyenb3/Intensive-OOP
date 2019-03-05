@@ -5,7 +5,7 @@
  */
 package Main;
 
-import static Main.Login.userName;
+import static Main.Login.isUser;
 import Main.User;
 
 import java.util.ArrayList;
@@ -135,7 +135,7 @@ public class Book {
         
         int chooseNumber;
         System.out.println("This is the list book");
-            for (Book book : listBook) {
+        for (Book book : listBook) {
             System.out.println(book.toString());
         }
         System.out.println("");
@@ -143,9 +143,9 @@ public class Book {
         Scanner scan = new Scanner(System.in);
         chooseNumber = scan.nextInt();
         if (chooseNumber == 1) {
-            if (userName.trim().equalsIgnoreCase("admin")) {
+            if (isUser == 1) {
                 bookDefault.manageBook();
-            } else {
+            } else if(isUser == 0) {
                 userDefault.userFrame();
             }
         } else if (chooseNumber == 2) {
@@ -185,7 +185,7 @@ public class Book {
         
         Book book = new Book(name, author, category, price, quantity);
         
-        System.out.println("Your book already add: "+book.getName());
+        System.out.println("Your book already add: " + book.getName());
         listBook.add(book);
         
         System.out.println("Press 1 to continue add, press 2 to come back the main board, press 3 to exit");
@@ -210,6 +210,7 @@ public class Book {
         System.out.println("--------------------------------------------");
         
         Book bookDefault = new Book();
+        User userDefault = new User();
         
         int flag = 0;
         int chooseNumber;
@@ -218,26 +219,59 @@ public class Book {
         System.out.println("Please enter the book's name");
         searchNameBook = scan.nextLine();
         for (Book book: listBook) {
+            if(book.getName() != null && book.getName().contains(searchNameBook)) {
                 System.out.println(book.toString());
                 
-                System.out.println("Press 1 to continue search, press 2 to update this book, press 3 to delete this book, "
-                        + "press 4 to go back the book board, press 5 to exit");
-                chooseNumber = scan.nextInt();
-                switch (chooseNumber) {
-                    case 1:
-                        book.searchBook();
-                        break;
-                    case 2:
-//                        book.updateBook(book);
-                        break;
-                    case 3:
-                        listBook.remove(book);
-                        bookDefault.viewAllBook();
-                        break;
-                    default:
-                        System.out.println("Please enter the correct number!");
-                        break;
+                if (isUser == 1) {
+                    System.out.println("Press 1 to continue search, press 2 to update this book, press 3 to delete this book, "
+                        + "press 4 to go back the user board, press 5 to exit");
+                    chooseNumber = scan.nextInt();
+                    switch (chooseNumber) {
+                        case 1:
+                            searchBook();
+                            break;
+                        case 2:
+                            book.updateBook(book);
+                            break;
+                        case 3:
+                            listBook.remove(book);
+                            bookDefault.viewAllBook();
+                            break;
+                        case 4:
+                            bookDefault.manageBook();
+                            break;
+                        case 5:
+                            System.exit(0);
+                            break;
+                        default:
+                            System.out.println("Please enter the correct number!");
+                            break;
+                    }
+                }else if(isUser == 0){
+                    System.out.println("Press 1 to continue search, press 2 to buy this book"
+                        + "press 3 to go back the user board, press 4 to exit");
+                    chooseNumber = scan.nextInt();
+                    switch (chooseNumber) {
+                        case 1:
+                            searchBook();
+                            break;
+                        case 2:
+                            Order order = new Order(2-3-2018;);
+                            break;
+                        case 3:
+                            userDefault.userFrame();
+                            break;
+                        case 4:
+                            System.exit(0);
+                        default:
+                            System.out.println("Please enter the correct number!");
+                            break;
+                    }
                 }
+                
+            }else{
+                flag = 0;
+            }
         }
         if (flag == 1) {
             bookDefault.searchBack();
@@ -268,6 +302,53 @@ public class Book {
                 System.out.println("Please enter the correct number!");
                 break;
         }  
+    }
+    
+        public void updateBook(Book book){
+        
+        int chooseNumber;
+        String name;
+        String category;
+        Author author;
+        double price;
+        int quantity;
+
+        Scanner scan = new Scanner(System.in);
+        System.out.println("************Update Book Form*************");
+        System.out.println("Enter book's name:");
+        name = scan.nextLine();
+        System.out.println("Plese input the author:");
+        author = Author.addAuthor();
+        System.out.println("Enter book's category:");
+        category = scan.nextLine();
+        System.out.println("Enter book's price:");
+        price = scan.nextDouble();
+        System.out.println("Enter book's quantity:");
+        quantity = scan.nextInt();
+  
+        book.setName(name);
+        book.setCategory(category);
+        book.setPrice(price);
+        book.setQuantity(quantity);        
+        
+        System.out.println("Update success!");
+        System.out.println("Press 1 to update again, press 2 to comeback main frame,press 3 to view all book, press 4 to exit");
+        chooseNumber = scan.nextInt();
+        switch (chooseNumber){
+            case 1: updateBook(book);
+                    break;
+            case 2: manageBook();
+                    break;
+            case 3: viewAllBook();
+                    break;
+            case 4: System.exit(0);
+                    break;
+            default:
+                    System.out.println("Please choose the correct number");
+        }  
+    }
+
+    public void buyBook(Book book, User user){
     }
     
     @Override
