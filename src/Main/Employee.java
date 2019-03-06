@@ -9,12 +9,14 @@ import Main.Person;
 import Main.User;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  *
  * @author thuy.cao
  */
 public class Employee extends Person{
+    private static final AtomicInteger count = new AtomicInteger(0);
     private String position;
     private int salary;
 

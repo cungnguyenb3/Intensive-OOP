@@ -10,7 +10,7 @@ package Main;
  * @author thuy.cao
  */
 abstract public class Person {
-    String code;
+    int code;
     protected String name;
     protected int age;
     protected double phone;
@@ -19,7 +19,7 @@ abstract public class Person {
     
 public Person(){
 }
-public Person(String code,String name,int age,double phone,String address,double acountNumber){
+public Person(int code,String name,int age,double phone,String address,double acountNumber){
     this.code = code;
     this.name = name;
     this.age = age;
@@ -43,11 +43,11 @@ public Person(String name,int age,double phone,String address){
     this.address = address;
 }
 
-public void setCode(String code){
+public void setCode(int code){
     this.code = code;
     
 }
-public String getCode(){
+public int getCode(){
     return code;
 }
 public void setName(String name){

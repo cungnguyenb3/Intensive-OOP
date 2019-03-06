@@ -5,18 +5,23 @@
  */
 package Main;
 
+import java.util.*;
 import static Main.Login.isUser;
+import static Main.Login.userName;
 import Main.User;
+import static Main.User.listUser;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  *
  * @author thuy.cao
  */
 public class Book {
-    private String code;
+    private static final AtomicInteger count = new AtomicInteger(0);
+    private int code;
     private String name;
     private String category;
     private double price;
@@ -25,7 +30,7 @@ public class Book {
    
     public Book(){}
     
-    public Book(String code, String name, String category, double price, int quantity, Author author) {
+    public Book(int code, String name, String category, double price, int quantity, Author author) {
         this.code = code;
         this.name = name;
         this.category = category;
@@ -36,6 +41,7 @@ public class Book {
     }
     
     public Book( String name, Author author, String category, double price, int quantity) {
+        code = count.incrementAndGet();
         this.name = name;
         this.author = author;
         this.category = category;
@@ -43,11 +49,11 @@ public class Book {
         this.quantity = quantity;
     }
 
-    public String getCode() {
+    public int getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(int code) {
         this.code = code;
     }
 
@@ -92,7 +98,7 @@ public class Book {
     }
     
     public static ArrayList<Book> listBook = new ArrayList<Book>();
-    public static ArrayList<Book> listBuyBook = new ArrayList<Book>();
+    public static ArrayList<Order> listOrder = new ArrayList<Order>();
     
     public void manageBook(){
         System.out.println("");
@@ -220,6 +226,7 @@ public class Book {
         searchNameBook = scan.nextLine();
         for (Book book: listBook) {
             if(book.getName() != null && book.getName().contains(searchNameBook)) {
+                flag = 1;
                 System.out.println(book.toString());
                 
                 if (isUser == 1) {
@@ -249,14 +256,14 @@ public class Book {
                     }
                 }else if(isUser == 0){
                     System.out.println("Press 1 to continue search, press 2 to buy this book"
-                        + "press 3 to go back the user board, press 4 to exit");
+                        + ", press 3 to go back the user board, press 4 to exit");
                     chooseNumber = scan.nextInt();
                     switch (chooseNumber) {
                         case 1:
                             searchBook();
                             break;
                         case 2:
-                            Order order = new Order(2-3-2018;);
+                            findUser(book);
                             break;
                         case 3:
                             userDefault.userFrame();
@@ -273,9 +280,7 @@ public class Book {
                 flag = 0;
             }
         }
-        if (flag == 1) {
-            bookDefault.searchBack();
-        }else{
+        if (flag == 0) {
             System.out.println("The book is not found");
             bookDefault.searchBack();
         }
@@ -332,7 +337,7 @@ public class Book {
         book.setQuantity(quantity);        
         
         System.out.println("Update success!");
-        System.out.println("Press 1 to update again, press 2 to comeback main frame,press 3 to view all book, press 4 to exit");
+        System.out.println("Press 1 to update again, press 2 to comeback main frame, press 3 to view all book, press 4 to exit");
         chooseNumber = scan.nextInt();
         switch (chooseNumber){
             case 1: updateBook(book);
@@ -348,12 +353,90 @@ public class Book {
         }  
     }
 
+    public void findUser(Book book){
+        for(User user: listUser){
+            if(user.getUsername().contains(userName)){
+               buyBook(book, user);
+            }
+        }
+    }
     public void buyBook(Book book, User user){
+        Date date = new Date();
+        Scanner scan = new Scanner(System.in);
+        Employee employee = new Employee("Trung", 20, 123456789, "Quang ngai", 1555265426, "shiper", 100);
+        
+        System.out.println("How many book?");
+        int quantity = scan.nextInt();
+        price = book.price;
+        double total = quantity * price;
+        
+        Order order = new Order(date, employee.getName(), user.getName(), book.getName(), quantity, price, total);
+        listOrder.add(order);
+        
+        System.out.println("Buy book success");
+        System.out.println("Press 1 to buy again, press 2 to view the list order, press 3 to go back, press 4 to exit");
+        int chooseNumber = scan.nextInt();
+        switch (chooseNumber){
+            case 1: searchBook();
+                    break;
+            case 2: viewAllOrder();
+                    break;
+            case 3: user.userFrame();
+                    break;
+            case 4: System.exit(0);
+                    break;
+            default:
+                    System.out.println("Please choose the correct number");
+        }
     }
     
+    public void viewAllOrder(){
+        System.out.println("");
+        System.out.println("--------------------------------------------");
+        
+        User userDefault = new User();
+        Scanner scan = new Scanner(System.in);
+        int chooseNumber;
+        System.out.println("This is the list order");
+        for (Order order : listOrder) {
+            System.out.println(order.toString());
+        }
+        
+        System.out.println("");
+        if (isUser == 1) {
+            System.out.println("Press 1 to go back, press 2 to exit");
+            chooseNumber = scan.nextInt();
+            switch (chooseNumber) {
+                case 1:
+                    userDefault.manageOrder();
+                    break;    
+                case 2:
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Please enter the correct number!");
+                    break;
+            }
+        }else if(isUser == 0){
+            System.out.println("Press 1 to go back, press 2 to exit");
+            chooseNumber = scan.nextInt();
+            switch (chooseNumber) {
+                case 1:
+                    userDefault.userFrame();
+                    break;    
+                case 2:
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Please enter the correct number!");
+                    break;
+            }
+        }
+    }
+  
     @Override
     public String toString() {
-        return "Book@[Name: " + this.getName() + ", Author: " + this.getAuthor() + ", category: "+ this.getCategory() + ", price: "+ this.getPrice() +
+        return "Book@[Code: " + getCode() + ", Name: " + this.getName() + ", Author: " + this.getAuthor() + ", category: "+ this.getCategory() + ", price: "+ this.getPrice() +
                 ", quantity: "+ this.getQuantity() ;
     }
     

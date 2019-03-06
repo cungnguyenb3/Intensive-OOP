@@ -6,46 +6,41 @@
 package Main;
 
 import java.util.Date;
+import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  *
  * @author cung.nguyen
  */
 public class Order {
+    private static final AtomicInteger count = new AtomicInteger(0);
     private int code;
     private Date date;
-    private Employee employee;
-    private User user;
+    private String employeeName;
+    private String userName;
+    private String bookName;
+    private int quantity;
+    private double price;
     private double totalMoney;
-    private Book book;
+    
 
     public Order() {
     }
 
-    public Order( Date date, Employee employee, User user, double totalMoney, Book book) {
+    public Order(Date date, String employeeName, String userName, String bookName, int quantity, double price, double totalMoney) {
+        code = count.incrementAndGet();
         this.date = date;
-        this.employee = employee;
-        this.user = user;
+        this.employeeName = employeeName;
+        this.userName = userName;
+        this.bookName = bookName;
+        this.quantity = quantity;
+        this.price = price;
         this.totalMoney = totalMoney;
-        this.book = book;
     }
-
-    public Book getBook() {
-        return book;
-    }
-
-    public void setBook(Book book) {
-        this.book = book;
-    }
-    
-   
 
     public int getCode() {
         return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
     }
 
     public Date getDate() {
@@ -56,20 +51,44 @@ public class Order {
         this.date = date;
     }
 
-    public Employee getEmployee() {
-        return employee;
+    public String getEmployeeName() {
+        return employeeName;
     }
 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
     }
 
-    public User getUser() {
-        return user;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getBookName() {
+        return bookName;
+    }
+
+    public void setBookName(String bookName) {
+        this.bookName = bookName;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     public double getTotalMoney() {
@@ -80,13 +99,17 @@ public class Order {
         this.totalMoney = totalMoney;
     }
 
-    public void buyBook(Book book,Employee employee,User user){
     
-    }
     
     @Override
     public String toString() {
-        return "Order{" + "code=" + code + ", date=" + date + ", employee=" + employee + ", user=" + user + ", totalMoney=" + totalMoney + '}';
+        return "Order{" +"code: "+ code + ", date=" + date + ", employeeName=" + employeeName + ", userName=" + userName + ", bookName=" + bookName + ", quantity=" + quantity + ", price=" + price + ", totalMoney=" + totalMoney + '}';
     }
+
+    
+    
+    
+    
+
     
 }

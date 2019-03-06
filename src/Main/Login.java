@@ -16,7 +16,7 @@ import java.util.Scanner;
  * @author cung.nguyen
  */
 public class Login {
-    private static String userName;
+    public static String userName;
     private static String password; 
     public static int isUser;
     

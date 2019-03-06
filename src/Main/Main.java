@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package Main;
+import static Main.Book.listBook;
 import Main.Login;
 import Main.Register;
 import static Main.User.listUser;
@@ -28,10 +29,18 @@ public class Main {
         chooseNumber = scan.nextInt();
         Login login = new Login();
         User userDefaultAdmin = new User("admin","password",1);
-        User userDefaultUser = new User("user","password",0);
+        User userDefaultUser = new User("Cung", 19, 12345667, "Quang Binh", "user", "password");
         
         listUser.add(userDefaultAdmin);
         listUser.add(userDefaultUser);
+        
+        Author author = new Author("Cung", "nam");
+        Book book1 = new Book("Book1", author, "Tieu thuyet", 30000, 2);
+        Book book2 = new Book("Book2", author, "Tieu thuyet", 40000, 2);
+        Book book3 = new Book("Book3", author, "Tieu thuyet", 50000, 2);
+        listBook.add(book1);
+        listBook.add(book2);
+        listBook.add(book3);
         
         if (chooseNumber == 1) {
             login.loginForm();
